@@ -10,6 +10,9 @@ const Board = props => {
                 return <Category
                         handleClueClick={props.handleClueClick}
                         category={category}
+                        currentClue={props.currentClue}
+                        gameState={props.gameState}
+                        answeringQuestion={props.answeringQuestion}
                         />
             })
         }

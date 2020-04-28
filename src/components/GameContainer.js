@@ -12,7 +12,6 @@ class GameContainer extends React.Component {
             categories: [],
             answeringQuestion: false,
             answer: "",
-            currentClue: {answer: ""},
             money: 0
         }
     }
@@ -26,54 +25,55 @@ class GameContainer extends React.Component {
     isCorrectAnswer = answer => {
         const sanitizedClueAnswer = this.sanitizeAnswer(this.state.currentClue.answer).toLowerCase()
         const sanitizedUserAnswer = this.sanitizeAnswer(answer).toLowerCase()
-        console.log(sanitizedClueAnswer)
-        console.log(sanitizedUserAnswer)
         const splitClueAnswer = sanitizedClueAnswer.split(/\/| /g)
         const splitUserAnswer = sanitizedUserAnswer.split(/\/| /g)
         return splitUserAnswer.every(word => splitClueAnswer.includes(word))
     }
 
-    handleSubmitAnswer = event => {
-        event.preventDefault()
-        this.state.currentClueNode.style.border = "solid black"
-        this.state.currentClueNode.children[0].innerText = ""
-        if(this.isCorrectAnswer(event.target["answer"].value)) {
-            this.setState(prevState => {
-                return {
-                    answeringQuestion: false,
-                    money: prevState.money + parseInt(prevState.currentClue.value),
-                }
-            })
+    updateClueToAnswered = (category, prevState) => {
+        if(category.id === prevState.currentClue.category_id) {
+            category.clues[prevState.currentClue.value] = {
+                ...prevState.currentClue,
+                answered: true
+            }
+            return category
         } else {
-            this.setState(prevState => {
-                return {
-                    answeringQuestion: false,
-                    money: prevState.money - parseInt(prevState.currentClue.value),
-                }
-            })
+            return category
         }
     }
 
-    handleClueClick = e => {
-        let clueNode
-        if(e.target.tagName === "P") {
-            clueNode = e.target.parentNode
-        } else {
-            clueNode = e.target
-        }
-        console.log(clueNode)
-        if(!this.state.answeringQuestion && clueNode.children[0].innerText !== "") {
-            clueNode.style.border = "solid yellow"
-            const category = this.state.categories.find(category => {
-                return category.id === parseInt(clueNode.dataset.categoryId)
-            })
-            console.log(category)
-            console.log(clueNode.dataset.value)
-            const clue = category.clues[clueNode.dataset.value]
+    handleSubmitAnswer = event => {
+        event.preventDefault()
+        event.persist()
+        this.setState(prevState => {
+            let updatedMoney
+            if(this.isCorrectAnswer(event.target.elements["answer"].value)) {
+                updatedMoney = prevState.money + parseInt(prevState.currentClue.value)
+            } else {
+                updatedMoney = prevState.money - parseInt(prevState.currentClue.value)
+            }
+
+            return {
+                answeringQuestion: false,
+                money: updatedMoney,
+                categories: prevState.categories.map(category => {
+                    return this.updateClueToAnswered(category, prevState)
+                })
+            }
+        })
+        
+    }
+
+    allClues = () => {
+        return this.state.categories.map(category => Object.values(category.clues)).flat()
+    }
+
+    handleClueClick = clueId => {
+        const clue = this.allClues().find(clue => clue.id === clueId)
+        if(!this.state.answeringQuestion && clue.answered === false) {
             this.setState({
                     answeringQuestion: true,
-                    currentClue: clue,
-                    currentClueNode: clueNode
+                    currentClue: clue
             })
         }
     }
@@ -82,11 +82,19 @@ class GameContainer extends React.Component {
         return category.clues.some(clue => clue.value === 100)
     }
 
+
+    createClueObj = clue => {
+        return {
+            ...clue,
+            answered: false
+        }
+    }
+
     createCategoryObj = category => {
         let cluesObj = {}
         category.clues.forEach(clue => {
-            if(!cluesObj[clue.value] && clue.value <= 500) {
-                cluesObj[clue.value] = clue
+            if(!cluesObj[clue.value] && clue.value <= 500 && clue.value !== null) {
+                cluesObj[clue.value] = this.createClueObj(clue)
             }
         })
         return {
@@ -105,7 +113,6 @@ class GameContainer extends React.Component {
             const newCategoryObj = this.createCategoryObj(category)
             const clueValues = Object.keys(newCategoryObj.clues)
             const keys = ["100", "200", "300", "400", "500"]
-            console.log(clueValues)
             if(this.hasFirstRoundClues(category) && keys.every(key => clueValues.includes(key)) ) {
                 this.setState(prevState => ({
                     categories: [...prevState.categories, newCategoryObj]
@@ -127,10 +134,14 @@ class GameContainer extends React.Component {
     }
 
     render() {
-        console.log("game container", this.state)
         return (
             <div className="game-container">
-                <Board handleClueClick={this.handleClueClick} categories={this.state.categories}/>
+                <Board
+                    handleClueClick={this.handleClueClick}
+                    categories={this.state.categories}
+                    currentClue={this.state.currentClue}
+                    answeringQuestion={this.state.answeringQuestion}
+                />
                 <p>${this.state.money}</p>
                 {
                     this.state.answeringQuestion ?
@@ -141,7 +152,7 @@ class GameContainer extends React.Component {
                         answer={this.state.answer}
                     />
                     :
-                    <ShowAnswer clue={this.state.currentClue}/>
+                    this.state.currentClue ? <ShowAnswer clue={this.state.currentClue}/> : null
                 }
             </div>
         )

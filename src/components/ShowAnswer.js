@@ -3,7 +3,7 @@ import React from 'react'
 const ShowAnswer = props => {
     return (
         <div>
-            <p>{props.clue.answer}</p>
+            <p>Answer: {props.clue.answer}</p>
         </div>
     )
 }

@@ -3,18 +3,23 @@ import ClueTile from './ClueTile'
 
 const Category = props => {
 
+    const renderClueTiles = () => {
+        return Object.keys(props.category.clues).map(value => {
+            return <ClueTile
+                    clue={props.category.clues[value]}
+                    currentClue={props.currentClue}
+                    handleClueClick={props.handleClueClick}
+                    answeringQuestion={props.answeringQuestion}
+                    />
+        })
+    }
     
-    console.log(props)
     return (
         <div className="category">
             <div className="category-title">
                 <p>{props.category.title}</p>
             </div>
-            <ClueTile categoryId={props.category.id} value={"100"} handleClueClick={props.handleClueClick}/>
-            <ClueTile categoryId={props.category.id} value={"200"} handleClueClick={props.handleClueClick}/>
-            <ClueTile categoryId={props.category.id} value={"300"} handleClueClick={props.handleClueClick}/>
-            <ClueTile categoryId={props.category.id} value={"400"} handleClueClick={props.handleClueClick}/>
-            <ClueTile categoryId={props.category.id} value={"500"} handleClueClick={props.handleClueClick}/>
+            {renderClueTiles()}
         </div>
     )
 }
