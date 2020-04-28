@@ -16,7 +16,8 @@ class AnswerQuestion extends React.Component {
     }
 
     formatAirdate = () => {
-        return this.props.clue.airdate.split("T")[0]
+        const date = new Date(this.props.clue.airdate.split("T")[0])
+        return date.toDateString()
     }
 
     render() {
