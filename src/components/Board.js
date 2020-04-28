@@ -1,10 +1,12 @@
 import React from 'react'
 import Category from './Category'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
 
 const Board = props => {
     const renderCategories = () => {
         if(props.categories.length < 6) {
-            return <p>Loading Board...</p>
+            return <Loader type="Circles" color="#00BFFF" height={80} width={80}/>
         } else {
             return props.categories.map(category => {
                 return <Category
