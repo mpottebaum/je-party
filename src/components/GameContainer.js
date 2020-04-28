@@ -17,21 +17,15 @@ class GameContainer extends React.Component {
         }
     }
 
-    handleChangeAnswer = event => {
-        this.setState({
-            answer: event.target.value
-        })
-    }
-
     sanitizeAnswer = answer => {
         let sanitized = answer.replace(/["',!.$-]|(<i>|<\/i>|^a |^the )/g, "")
         sanitized = sanitized.replace(/( and | & )/g, " ")
         return sanitized
     }
 
-    isCorrectAnswer = () => {
+    isCorrectAnswer = answer => {
         const sanitizedClueAnswer = this.sanitizeAnswer(this.state.currentClue.answer).toLowerCase()
-        const sanitizedUserAnswer = this.sanitizeAnswer(this.state.answer).toLowerCase()
+        const sanitizedUserAnswer = this.sanitizeAnswer(answer).toLowerCase()
         console.log(sanitizedClueAnswer)
         console.log(sanitizedUserAnswer)
         const splitClueAnswer = sanitizedClueAnswer.split(/\/| /g)
@@ -43,12 +37,11 @@ class GameContainer extends React.Component {
         event.preventDefault()
         this.state.currentClueNode.style.border = "solid black"
         this.state.currentClueNode.children[0].innerText = ""
-        if(this.isCorrectAnswer()) {
+        if(this.isCorrectAnswer(event.target["answer"].value)) {
             this.setState(prevState => {
                 return {
                     answeringQuestion: false,
                     money: prevState.money + parseInt(prevState.currentClue.value),
-                    answer: ""
                 }
             })
         } else {
@@ -56,7 +49,6 @@ class GameContainer extends React.Component {
                 return {
                     answeringQuestion: false,
                     money: prevState.money - parseInt(prevState.currentClue.value),
-                    answer: ""
                 }
             })
         }
