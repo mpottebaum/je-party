@@ -6,6 +6,7 @@ const Category = props => {
     const renderClueTiles = () => {
         return Object.keys(props.category.clues).map(value => {
             return <ClueTile
+                    key={props.category.clues[value].id}
                     clue={props.category.clues[value]}
                     currentClue={props.currentClue}
                     handleClueClick={props.handleClueClick}

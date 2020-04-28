@@ -8,6 +8,7 @@ const Board = props => {
         } else {
             return props.categories.map(category => {
                 return <Category
+                        key={category.id}
                         handleClueClick={props.handleClueClick}
                         category={category}
                         currentClue={props.currentClue}
