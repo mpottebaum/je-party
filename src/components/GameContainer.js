@@ -11,7 +11,6 @@ class GameContainer extends React.Component {
         this.state = {
             categories: [],
             answeringQuestion: false,
-            answer: "",
             money: 0
         }
     }
@@ -149,7 +148,6 @@ class GameContainer extends React.Component {
                         handleSubmitAnswer={this.handleSubmitAnswer}
                         handleChangeAnswer={this.handleChangeAnswer}
                         clue={this.state.currentClue}
-                        answer={this.state.answer}
                     />
                     :
                     this.state.currentClue ? <ShowAnswer clue={this.state.currentClue}/> : null
