@@ -11,7 +11,6 @@ const Board = props => {
                         handleClueClick={props.handleClueClick}
                         category={category}
                         currentClue={props.currentClue}
-                        gameState={props.gameState}
                         answeringQuestion={props.answeringQuestion}
                         />
             })
