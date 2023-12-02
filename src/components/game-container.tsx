@@ -8,6 +8,7 @@ import { allClues, createCategoryObj, isCorrectAnswer } from '../utils'
 
 export function GameContainer() {
   const [ categories, setCategories ] = useState<Category[]>([])
+  const [ isCategoriesLoading, setIsCategoriesLoading ] = useState(true)
   const [ answeringQuestion, setAnsweringQuestion ] = useState(false)
   const [ money, setMoney ] = useState(0)
   const [ currentClue, setCurrentClue ] = useState<Clue | undefined>()
@@ -81,6 +82,7 @@ export function GameContainer() {
   }
 
   useEffect(() => {
+    setIsCategoriesLoading(true)
     // getCategories(6)
     Promise.all(mockApiCategories.map(async c => {
       const [newCategoryObj] = createCategoryObj(c)
@@ -88,6 +90,7 @@ export function GameContainer() {
     }))
     .then(newCategories => {
       setCategories(newCategories)
+      setIsCategoriesLoading(false)
     })
   }, [])
   console.log({
@@ -99,6 +102,7 @@ export function GameContainer() {
   <Board
       handleClueClick={handleClueClick}
       categories={categories}
+      isCategoriesLoading={isCategoriesLoading}
       currentClue={currentClue}
       answeringQuestion={answeringQuestion}
   />

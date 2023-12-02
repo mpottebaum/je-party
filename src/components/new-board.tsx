@@ -1,8 +1,9 @@
 import { Clue, Category as ICategory } from '../types'
-import {Circles} from 'react-loader-spinner'
+import { WithLoader } from './with-loader';
 
 interface BoardProps {
   categories: ICategory[];
+  isCategoriesLoading: boolean;
   currentClue?: Clue;
   answeringQuestion: boolean;
   handleClueClick: (id: number) => void;
@@ -10,6 +11,7 @@ interface BoardProps {
 
 export function Board({
   categories,
+  isCategoriesLoading,
   handleClueClick,
   currentClue,
   answeringQuestion,
@@ -17,10 +19,8 @@ export function Board({
   return (
     <div className="board-block">
         <div className="board">
-            {categories.length < 6 && (
-              <Circles color="#00BFFF" height={80} width={80} ariaLabel="circles-loading" />
-            )}
-            {categories.length >= 6 && categories.map(category => {
+          <WithLoader isLoading={isCategoriesLoading}>
+            {categories.map(category => {
                 const clueValues = Object.keys(category.clues)
                 return (
                   <div className="category">
@@ -45,6 +45,7 @@ export function Board({
                 )
               }
             )}
+          </WithLoader>
         </div>
     </div>  
   )
