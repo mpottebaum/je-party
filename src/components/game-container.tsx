@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { ApiCategory, ApiClue, Category, Clue } from '../types'
+import { ApiCategory, Category, Clue } from '../types'
 import { Board } from './board'
 import { AnswerQuestion } from './answer-question'
 import { ShowAnswer } from './show-answer'
 import { API_URL } from '../constants'
 import { mockApiCategories } from '../mock-data'
+import { allClues, createCategoryObj, isCorrectAnswer } from '../utils'
 
 export function GameContainer() {
   const [ categories, setCategories ] = useState<Category[]>([])
@@ -12,26 +13,12 @@ export function GameContainer() {
   const [ money, setMoney ] = useState(0)
   const [ currentClue, setCurrentClue ] = useState<Clue | undefined>()
 
-  const sanitizeAnswer = (answer: string) => {
-    let sanitized = answer.replace(/["',!.$-]|(<i>|<\/i>|^a |^the )/g, "")
-    sanitized = sanitized.replace(/( and | & )/g, " ")
-    return sanitized
-  }
-
-  const isCorrectAnswer = (answer: string) => {
-    const sanitizedClueAnswer = sanitizeAnswer(currentClue?.answer ?? '').toLowerCase()
-    const sanitizedUserAnswer = sanitizeAnswer(answer).toLowerCase()
-    const splitClueAnswer = sanitizedClueAnswer.split(/\/| /g)
-    const splitUserAnswer = sanitizedUserAnswer.split(/\/| /g)
-    return splitUserAnswer.every(word => splitClueAnswer.includes(word))
-  }
-
-  const handleSubmitAnswer = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    event.persist()
+  const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    e.persist()
     setMoney(prevMoney => {
       let updatedMoney
-      if(isCorrectAnswer((event.currentTarget.elements[0] as HTMLInputElement).value)) {
+      if(isCorrectAnswer((e.currentTarget.elements[0] as HTMLInputElement).value, currentClue?.answer ?? '')) {
           updatedMoney = prevMoney + (currentClue?.value ?? 0)
       } else {
           updatedMoney = prevMoney - (currentClue?.value ?? 0)
@@ -53,50 +40,12 @@ export function GameContainer() {
     })
   }
 
-  const allClues = () => {
-    return categories.map(category => Object.values(category.clues)).flat()
-  }
-
   const handleClueClick = (clueId: number) => {
-    const clue = allClues().find(clue => clue.id === clueId)
+    const clue = allClues(categories).find(clue => clue.id === clueId)
     if(!answeringQuestion && clue?.answered === false) {
       setAnsweringQuestion(true)
       setCurrentClue(clue)
     }
-  }
-
-
-
-  const createClueObj = (clue: ApiClue): Clue => {
-    return {
-        ...clue,
-        categoryId: clue.category_id,
-        answered: false
-    }
-  }
-
-  const createCategoryObj = (category: ApiCategory): [Category, boolean] => {
-    const singleClueValues = [100, 200, 300, 400, 500]
-    const apiClueValues = category.clues.map(clue => clue.value)
-    const isSingleJep = singleClueValues.every(val => apiClueValues.includes(val))
-    const isDoubleJep = singleClueValues.every(val => apiClueValues.includes(val * 2))
-    const clueValues: number[] = []
-    const newCategory: Category = {
-        id: category.id,
-        title: category.title.toUpperCase(),
-        clues: category.clues.reduce((cluesObj, clue) => {
-          if(clue.value) {
-            const clueValue = isDoubleJep ? clue.value / 2 : clue.value
-            if(!cluesObj[clueValue] && clueValue <= 500) {
-              cluesObj[clueValue] = createClueObj(clue)
-              clueValues.push(clueValue)
-            }
-          }
-          return cluesObj
-        }, {} as Record<number, Clue>)
-    }
-    const isValid = isSingleJep || isDoubleJep
-    return [ newCategory, isValid ]
   }
 
   const getCategory = async (): Promise<[Category, boolean]> => {
