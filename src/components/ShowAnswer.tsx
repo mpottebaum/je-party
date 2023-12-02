@@ -1,6 +1,11 @@
 import React from 'react'
+import { Clue } from '../types'
 
-const ShowAnswer = props => {
+interface ShowAnswerProps {
+    clue: Clue;
+}
+
+const ShowAnswer: React.FC<ShowAnswerProps> = props => {
     return (
         <div>
             <p>Answer: {props.clue.answer}</p>
