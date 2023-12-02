@@ -1,12 +1,19 @@
 import React from 'react'
 import Category from './Category'
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
-import Loader from 'react-loader-spinner'
+import {Circles} from 'react-loader-spinner'
+import { Clue, Category as ICategory } from '../types'
 
-const Board = props => {
+interface BoardProps {
+    categories: ICategory[];
+    currentClue?: Clue;
+    answeringQuestion: boolean;
+    handleClueClick: (id: string) => void;
+}
+
+const Board: React.FC<BoardProps> = props => {
     const renderCategories = () => {
         if(props.categories.length < 6) {
-            return <Loader type="Circles" color="#00BFFF" height={80} width={80}/>
+            return <Circles color="#00BFFF" height={80} width={80} ariaLabel="circles-loading" />
         } else {
             return props.categories.map(category => {
                 return <Category

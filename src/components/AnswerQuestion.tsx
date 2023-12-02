@@ -1,22 +1,32 @@
 import React from 'react'
+import { Clue } from '../types';
 
-class AnswerQuestion extends React.Component {
-    constructor() {
-        super()
+interface AnswerQuestionProps {
+    clue?: Clue;
+    handleSubmitAnswer: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+interface AnswerQuestionState {
+    answer: string;
+}
+
+class AnswerQuestion extends React.Component<AnswerQuestionProps, AnswerQuestionState> {
+    constructor(props: AnswerQuestionProps) {
+        super(props)
 
         this.state = {
             answer: ""
         }
     }
     
-    handleChangeAnswer = event => {
+    handleChangeAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             answer: event.target.value
         })
     }
 
     formatAirdate = () => {
-        const date = new Date(this.props.clue.airdate.split("T")[0])
+        const date = new Date(this.props.clue?.airdate.split("T")[0] ?? '')
         return date.toDateString()
     }
 
@@ -24,7 +34,7 @@ class AnswerQuestion extends React.Component {
         console.log(this.props.clue)
         return (
             <div>
-                <p>{this.props.clue.question}</p>
+                <p>{this.props.clue?.question}</p>
                 <form onSubmit={this.props.handleSubmitAnswer}>
                     <input onChange={this.handleChangeAnswer} type="text" name="answer" value={this.state.answer}/>
                     <input type="submit" value="Submit Answer" />

@@ -1,6 +1,14 @@
 import React from 'react'
+import { Clue } from '../types';
 
-const ClueTile = props => {
+interface ClueTileProps {
+    clue: Clue;
+    currentClue?: Clue;
+    handleClueClick: (id: string) => void;
+    answeringQuestion: boolean;
+}
+
+const ClueTile: React.FC<ClueTileProps> = props => {
     let borderStyle
     if(props.currentClue && props.currentClue.id === props.clue.id && props.answeringQuestion === true) {
         borderStyle={border: "solid yellow"}
