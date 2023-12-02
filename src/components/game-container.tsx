@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ApiCategory, Category, Clue } from '../types'
-import { Board } from './board'
+import { Board } from './new-board'
 import { AnswerQuestion } from './answer-question'
-import { ShowAnswer } from './show-answer'
 import { API_URL } from '../constants'
 import { mockApiCategories } from '../mock-data'
 import { allClues, createCategoryObj, isCorrectAnswer } from '../utils'
@@ -62,7 +61,8 @@ export function GameContainer() {
   const getCategories = async (numCategories: number) => {
     const newCats: Category[] = []
     let remaining = numCategories
-    while(remaining > 0) {
+    let attempts = 0
+    while(remaining > 0 && attempts < 20) {
       const promises = Array.from({ length: remaining }).map(() => {
         return getCategory()
       })
@@ -72,7 +72,10 @@ export function GameContainer() {
         .map(([cat]) => cat)
       newCats.push(...validCats)
       remaining = numCategories - newCats.length
-
+      attempts++
+    }
+    if(attempts >= 20) {
+      console.log(`get categories: too many attempts ${attempts}`)
     }
     return newCats
   }
@@ -100,16 +103,17 @@ export function GameContainer() {
       answeringQuestion={answeringQuestion}
   />
   <p>${money}</p>
-  {
-      answeringQuestion ?
-      <AnswerQuestion
-          handleSubmitAnswer={handleSubmitAnswer}
-          // handleChangeAnswer={this.handleChangeAnswer}
-          clue={currentClue}
-      />
-      :
-      currentClue ? <ShowAnswer clue={currentClue}/> : null
-  }
+  {answeringQuestion && (
+    <AnswerQuestion
+        handleSubmitAnswer={handleSubmitAnswer}
+        clue={currentClue}
+    />
+  )}
+  {!answeringQuestion && currentClue && (
+    <div>
+      <p>Answer: {currentClue.answer}</p>
+    </div>
+  )}
 </div>
   )
 }
