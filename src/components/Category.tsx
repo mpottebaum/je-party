@@ -4,7 +4,7 @@ import { Category as ICategory, Clue } from '../types'
 interface CategoryProps {
     category: ICategory;
     currentClue?: Clue;
-    handleClueClick: (id: string) => void;
+    handleClueClick: (id: number) => void;
     answeringQuestion: boolean;
 }
 

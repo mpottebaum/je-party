@@ -3,6 +3,8 @@ import { ApiCategory, ApiClue, Category, Clue } from '../types'
 import { Board } from './board'
 import { AnswerQuestion } from './answer-question'
 import { ShowAnswer } from './show-answer'
+import { API_URL } from '../constants'
+import { mockApiCategories } from '../mock-data'
 
 export function GameContainer() {
   const [ categories, setCategories ] = useState<Category[]>([])
@@ -40,7 +42,7 @@ export function GameContainer() {
     setCategories(prevCategories => {
       return prevCategories.map(category => {
         if(category.id === currentClue?.categoryId) {
-          category.clues[currentClue.value] = {
+          category.clues[currentClue.value ?? 0] = {
             ...currentClue,
             answered: true,
           }
@@ -55,7 +57,7 @@ export function GameContainer() {
     return categories.map(category => Object.values(category.clues)).flat()
   }
 
-  const handleClueClick = (clueId: string) => {
+  const handleClueClick = (clueId: number) => {
     const clue = allClues().find(clue => clue.id === clueId)
     if(!answeringQuestion && clue?.answered === false) {
       setAnsweringQuestion(true)
@@ -63,63 +65,82 @@ export function GameContainer() {
     }
   }
 
-  const hasFirstRoundClues = (category: ApiCategory) => {
-    return category.clues.some(clue => clue.value === 100)
-  }
+
 
   const createClueObj = (clue: ApiClue): Clue => {
     return {
         ...clue,
-        categoryId: parseInt(clue.category_id),
+        categoryId: clue.category_id,
         answered: false
     }
   }
 
-  const createCategoryObj = (category: ApiCategory): Category => {
-    let cluesObj: Record<number, Clue> = {}
-    category.clues.forEach(clue => {
-        if(!cluesObj[clue.value] && clue.value <= 500 && clue.value !== null) {
-            cluesObj[clue.value] = createClueObj(clue)
-        }
-    })
-    return {
-        id: parseInt(category.id),
+  const createCategoryObj = (category: ApiCategory): [Category, boolean] => {
+    const singleClueValues = [100, 200, 300, 400, 500]
+    const apiClueValues = category.clues.map(clue => clue.value)
+    const isSingleJep = singleClueValues.every(val => apiClueValues.includes(val))
+    const isDoubleJep = singleClueValues.every(val => apiClueValues.includes(val * 2))
+    const clueValues: number[] = []
+    const newCategory: Category = {
+        id: category.id,
         title: category.title.toUpperCase(),
-        clues: cluesObj
+        clues: category.clues.reduce((cluesObj, clue) => {
+          if(clue.value) {
+            const clueValue = isDoubleJep ? clue.value / 2 : clue.value
+            if(!cluesObj[clueValue] && clueValue <= 500) {
+              cluesObj[clueValue] = createClueObj(clue)
+              clueValues.push(clueValue)
+            }
+          }
+          return cluesObj
+        }, {} as Record<number, Clue>)
     }
+    const isValid = isSingleJep || isDoubleJep
+    return [ newCategory, isValid ]
   }
 
-  const getCategory = () => {
+  const getCategory = async (): Promise<[Category, boolean]> => {
     const id = Math.round(Math.random() * 18418)
-    const url = URL + `/category?id=${id}`
-    fetch(url)
-    .then(resp => resp.json())
-    .then((category: ApiCategory) => {
-        const newCategoryObj = createCategoryObj(category)
-        const clueValues = Object.keys(newCategoryObj.clues)
-        const keys = ["100", "200", "300", "400", "500"]
-        if(hasFirstRoundClues(category) && keys.every(key => clueValues.includes(key)) ) {
-          setCategories(prevCategories => {
-            return [
-              ...prevCategories,
-              newCategoryObj
-            ]
-          })  
-        } else {
-            getCategory()
-        }
-    })
-    .catch(err => console.log(err))
+    const url = API_URL + `/category?id=${id}`
+    const resp = await fetch(url)
+    const category: ApiCategory = await resp.json()
+
+    return createCategoryObj(category)
+  }
+
+  // @ts-expect-error @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getCategories = async (numCategories: number) => {
+    const newCats: Category[] = []
+    let remaining = numCategories
+    while(remaining > 0) {
+      const promises = Array.from({ length: remaining }).map(() => {
+        return getCategory()
+      })
+      const results = await Promise.all(promises)
+      const validCats = results
+        .filter(([, isValid]) => isValid)
+        .map(([cat]) => cat)
+      newCats.push(...validCats)
+      remaining = numCategories - newCats.length
+
+    }
+    return newCats
   }
 
   useEffect(() => {
-    getCategory()
-    getCategory()
-    getCategory()
-    getCategory()
-    getCategory()
-    getCategory()
+    // getCategories(6)
+    Promise.all(mockApiCategories.map(async c => {
+      const [newCategoryObj] = createCategoryObj(c)
+      return newCategoryObj
+    }))
+    .then(newCategories => {
+      setCategories(newCategories)
+    })
   }, [])
+  console.log({
+    categories,
+  })
 
   return (
 <div className="game-container">

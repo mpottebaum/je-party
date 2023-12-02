@@ -2,9 +2,11 @@ export interface ApiClue {
   question: string;
   answer: string;
   airdate: string;
-  category_id: string;
-  value: number;
-  id: string;
+  category_id: number;
+  game_id: number;
+  invalid_count: null;
+  value: number | null;
+  id: number;
 }
 
 export interface Clue extends ApiClue{
@@ -13,8 +15,9 @@ export interface Clue extends ApiClue{
 }
 
 export interface ApiCategory {
-  id: string;
+  id: number;
   title: string;
+  clues_count: number;
   clues: ApiClue[];
 }
 

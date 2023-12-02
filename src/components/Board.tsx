@@ -6,7 +6,7 @@ interface BoardProps {
   categories: ICategory[];
   currentClue?: Clue;
   answeringQuestion: boolean;
-  handleClueClick: (id: string) => void;
+  handleClueClick: (id: number) => void;
 }
 
 export function Board({

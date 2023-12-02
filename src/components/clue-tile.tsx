@@ -3,7 +3,7 @@ import { Clue } from '../types';
 interface ClueTileProps {
     clue: Clue;
     currentClue?: Clue;
-    handleClueClick: (id: string) => void;
+    handleClueClick: (id: number) => void;
     answeringQuestion: boolean;
 }
 
