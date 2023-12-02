@@ -1,6 +1,5 @@
 import { Clue, Category as ICategory } from '../types'
 import {Circles} from 'react-loader-spinner'
-import { ClueTile } from './clue-tile';
 
 interface BoardProps {
   categories: ICategory[];
@@ -15,7 +14,6 @@ export function Board({
   currentClue,
   answeringQuestion,
 }: BoardProps) {
-
   return (
     <div className="board-block">
         <div className="board">
@@ -32,14 +30,15 @@ export function Board({
                     {clueValues.map(value => {
                       const num = parseInt(value)
                       if(num > 500) return null
+                      const clue = category.clues[num]
+                      const selectedClass = (currentClue?.id === clue.id && answeringQuestion === true) ? " selected" : " unselected"
                       return (
-                        <ClueTile
-                          key={category.clues[num].id}
-                          clue={category.clues[num]}
-                          currentClue={currentClue}
-                          handleClueClick={handleClueClick}
-                          answeringQuestion={answeringQuestion}
-                        />
+                        <div
+                          onClick={() => handleClueClick(clue.id)}
+                          className={"clue-tile" + selectedClass}
+                        >
+                          <p>{clue.answered ? null : clue.value}</p>
+                        </div>
                       )
                     })}
                   </div>
