@@ -17,7 +17,6 @@ export function Board({
   answeringQuestion,
 }: BoardProps) {
   return (
-    <div className="board-block">
         <div className="board">
           <WithLoader isLoading={isCategoriesLoading}>
             {categories.map(category => {
@@ -31,7 +30,7 @@ export function Board({
                       const num = parseInt(value)
                       if(num > 500) return null
                       const clue = category.clues[num]
-                      const selectedClass = (currentClue?.id === clue.id && answeringQuestion === true) ? " selected" : " unselected"
+                      const selectedClass = (currentClue?.id === clue.id && answeringQuestion === true) ? " selected" : ""
                       return (
                         <div
                           onClick={() => handleClueClick(clue.id)}
@@ -46,7 +45,6 @@ export function Board({
               }
             )}
           </WithLoader>
-        </div>
-    </div>  
+        </div> 
   )
 }

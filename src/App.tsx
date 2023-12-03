@@ -3,9 +3,9 @@ import {GameContainer} from './components/game-container'
 
 function App() {
   return (
-    <div className="App">
+    <main>
       <GameContainer />
-    </div>
+    </main>
   );
 }
 

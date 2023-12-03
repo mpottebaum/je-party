@@ -98,26 +98,26 @@ export function GameContainer() {
   })
 
   return (
-<div className="game-container">
-  <Board
-      handleClueClick={handleClueClick}
-      categories={categories}
-      isCategoriesLoading={isCategoriesLoading}
-      currentClue={currentClue}
-      answeringQuestion={answeringQuestion}
-  />
-  <p>${money}</p>
-  {answeringQuestion && (
-    <AnswerQuestion
-        handleSubmitAnswer={handleSubmitAnswer}
-        clue={currentClue}
-    />
-  )}
-  {!answeringQuestion && currentClue && (
-    <div>
-      <p>Answer: {currentClue.answer}</p>
+    <div className="game-container">
+      <Board
+          handleClueClick={handleClueClick}
+          categories={categories}
+          isCategoriesLoading={isCategoriesLoading}
+          currentClue={currentClue}
+          answeringQuestion={answeringQuestion}
+      />
+      <p>${money}</p>
+      {answeringQuestion && (
+        <AnswerQuestion
+            handleSubmitAnswer={handleSubmitAnswer}
+            clue={currentClue}
+        />
+      )}
+      {!answeringQuestion && currentClue && (
+        <div>
+          <p>Answer: {currentClue.answer}</p>
+        </div>
+      )}
     </div>
-  )}
-</div>
   )
 }

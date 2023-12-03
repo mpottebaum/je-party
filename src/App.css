@@ -1,24 +1,23 @@
 .game-container {
   text-align: center;
-  background-color: blue;
   color: white;
-  padding: 50px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .board {
-  display: grid;
-  grid-template-columns: repeat(6, 150px);
-  grid-template-rows: auto;
-}
-
-.board-block {
-  display: inline-block;
+  display: flex;
 }
 
 .category-title, .clue-tile {
-  height: 75px;
-  width: 150px;
+  height: 5rem;
+  width: 10rem;
   border: solid black;
+  box-sizing: border-box;
 }
 
 .category-title {
@@ -27,18 +26,13 @@
 
 .clue-tile {
   color: yellow;
-  font-size: 25px;
+  font-size: 1.5rem;
 }
 
 .selected {
   border: solid yellow;
 }
 
-.unselected {
-  border: solid black;
-}
-
 .airdate {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
-
