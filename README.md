@@ -4,6 +4,10 @@ Je Party is a Jeopardy simulator that allows fans of the show to play a full boa
 
 ![Je Party demo](demo/jeopardy_demo_img.png)
 
+## Requirements
+
+Node version 18
+
 ## Installing Je Party
 
 To install Je Party, clone this repo and install dependencies.
@@ -12,16 +16,17 @@ To install Je Party, clone this repo and install dependencies.
 git clone git@github.com:mpottebaum/je-party.git
 
 cd je-party
+npm run prepare
 npm install
 ```
 
 ## Using Je Party
 
-To use Je Party, `cd` into the `je-party` directory and start the server.
+To use Je Party, `cd` into the `je-party` directory and start the dev server.
 
 ```
 cd je-party
-npm start
+npm run dev
 ```
 
 ## Contact

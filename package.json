@@ -42,5 +42,8 @@
   },
   "msw": {
     "workerDirectory": "src/mocks"
+  },
+  "engines": {
+    "node": "^18"
   }
 }
