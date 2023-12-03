@@ -20,12 +20,12 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: "setup node"
+      - name: 'setup node'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      - name: "install dependencies"
+      - name: 'install dependencies'
         run: npm ci
       - name: build
         run: npm run build
@@ -36,12 +36,12 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: "setup node"
+      - name: 'setup node'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      - name: "install dependencies"
+      - name: 'install dependencies'
         run: npm ci
       - name: lint
         run: npm run lint
@@ -52,12 +52,12 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: "setup node"
+      - name: 'setup node'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      - name: "install dependencies"
+      - name: 'install dependencies'
         run: npm ci
       - name: lint
         run: npm run test
