@@ -3,7 +3,6 @@ import { ApiCategory, Category, Clue } from '../types'
 import { Board } from './new-board'
 import { AnswerQuestion } from './answer-question'
 import { API_URL } from '../constants'
-import { mockApiCategories } from '../mock-data'
 import { allClues, createCategoryObj, isCorrectAnswer } from '../utils'
 
 export function GameContainer() {
@@ -57,8 +56,6 @@ export function GameContainer() {
     return createCategoryObj(category)
   }
 
-  // @ts-expect-error @typescript-eslint/no-unused-vars
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getCategories = async (numCategories: number) => {
     const newCats: Category[] = []
     let remaining = numCategories
@@ -83,11 +80,7 @@ export function GameContainer() {
 
   useEffect(() => {
     setIsCategoriesLoading(true)
-    // getCategories(6)
-    Promise.all(mockApiCategories.map(async c => {
-      const [newCategoryObj] = createCategoryObj(c)
-      return newCategoryObj
-    }))
+    getCategories(6)
     .then(newCategories => {
       setCategories(newCategories)
       setIsCategoriesLoading(false)
