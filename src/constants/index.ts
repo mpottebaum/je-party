@@ -1,1 +1,1 @@
-export const URL = 'http://jservice.io/api'
+export const API_URL = 'http://jservice.io/api'

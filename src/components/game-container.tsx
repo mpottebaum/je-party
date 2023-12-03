@@ -1,35 +1,23 @@
 import { useEffect, useState } from 'react'
-import { ApiCategory, ApiClue, Category, Clue } from '../types'
-import { Board } from './board'
+import { ApiCategory, Category, Clue } from '../types'
+import { Board } from './new-board'
 import { AnswerQuestion } from './answer-question'
-import { ShowAnswer } from './show-answer'
+import { API_URL } from '../constants'
+import { allClues, createCategory, isCorrectAnswer } from '../utils'
 
 export function GameContainer() {
   const [ categories, setCategories ] = useState<Category[]>([])
+  const [ isCategoriesLoading, setIsCategoriesLoading ] = useState(true)
   const [ answeringQuestion, setAnsweringQuestion ] = useState(false)
   const [ money, setMoney ] = useState(0)
   const [ currentClue, setCurrentClue ] = useState<Clue | undefined>()
 
-  const sanitizeAnswer = (answer: string) => {
-    let sanitized = answer.replace(/["',!.$-]|(<i>|<\/i>|^a |^the )/g, "")
-    sanitized = sanitized.replace(/( and | & )/g, " ")
-    return sanitized
-  }
-
-  const isCorrectAnswer = (answer: string) => {
-    const sanitizedClueAnswer = sanitizeAnswer(currentClue?.answer ?? '').toLowerCase()
-    const sanitizedUserAnswer = sanitizeAnswer(answer).toLowerCase()
-    const splitClueAnswer = sanitizedClueAnswer.split(/\/| /g)
-    const splitUserAnswer = sanitizedUserAnswer.split(/\/| /g)
-    return splitUserAnswer.every(word => splitClueAnswer.includes(word))
-  }
-
-  const handleSubmitAnswer = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    event.persist()
+  const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    e.persist()
     setMoney(prevMoney => {
       let updatedMoney
-      if(isCorrectAnswer((event.currentTarget.elements[0] as HTMLInputElement).value)) {
+      if(isCorrectAnswer((e.currentTarget.elements[0] as HTMLInputElement).value, currentClue?.answer ?? '')) {
           updatedMoney = prevMoney + (currentClue?.value ?? 0)
       } else {
           updatedMoney = prevMoney - (currentClue?.value ?? 0)
@@ -40,7 +28,7 @@ export function GameContainer() {
     setCategories(prevCategories => {
       return prevCategories.map(category => {
         if(category.id === currentClue?.categoryId) {
-          category.clues[currentClue.value] = {
+          category.clues[currentClue.value ?? 0] = {
             ...currentClue,
             answered: true,
           }
@@ -51,95 +39,78 @@ export function GameContainer() {
     })
   }
 
-  const allClues = () => {
-    return categories.map(category => Object.values(category.clues)).flat()
-  }
-
-  const handleClueClick = (clueId: string) => {
-    const clue = allClues().find(clue => clue.id === clueId)
+  const handleClueClick = (clueId: number) => {
+    const clue = allClues(categories).find(clue => clue.id === clueId)
     if(!answeringQuestion && clue?.answered === false) {
       setAnsweringQuestion(true)
       setCurrentClue(clue)
     }
   }
 
-  const hasFirstRoundClues = (category: ApiCategory) => {
-    return category.clues.some(clue => clue.value === 100)
-  }
-
-  const createClueObj = (clue: ApiClue): Clue => {
-    return {
-        ...clue,
-        categoryId: parseInt(clue.category_id),
-        answered: false
-    }
-  }
-
-  const createCategoryObj = (category: ApiCategory): Category => {
-    let cluesObj: Record<number, Clue> = {}
-    category.clues.forEach(clue => {
-        if(!cluesObj[clue.value] && clue.value <= 500 && clue.value !== null) {
-            cluesObj[clue.value] = createClueObj(clue)
-        }
-    })
-    return {
-        id: parseInt(category.id),
-        title: category.title.toUpperCase(),
-        clues: cluesObj
-    }
-  }
-
-  const getCategory = () => {
+  const getCategory = async (): Promise<[Category, boolean]> => {
     const id = Math.round(Math.random() * 18418)
-    const url = URL + `/category?id=${id}`
-    fetch(url)
-    .then(resp => resp.json())
-    .then((category: ApiCategory) => {
-        const newCategoryObj = createCategoryObj(category)
-        const clueValues = Object.keys(newCategoryObj.clues)
-        const keys = ["100", "200", "300", "400", "500"]
-        if(hasFirstRoundClues(category) && keys.every(key => clueValues.includes(key)) ) {
-          setCategories(prevCategories => {
-            return [
-              ...prevCategories,
-              newCategoryObj
-            ]
-          })  
-        } else {
-            getCategory()
-        }
-    })
-    .catch(err => console.log(err))
+    const url = API_URL + `/category?id=${id}`
+    const resp = await fetch(url)
+    const category: ApiCategory = await resp.json()
+
+    return createCategory(category)
+  }
+
+  const getCategories = async (numCategories: number) => {
+    const newCats: Category[] = []
+    let remaining = numCategories
+    let attempts = 0
+    while(remaining > 0 && attempts < 20) {
+      const promises = Array.from({ length: remaining }).map(() => {
+        return getCategory()
+      })
+      const results = await Promise.all(promises)
+      const validCats = results
+        .filter(([, isValid]) => isValid)
+        .map(([cat]) => cat)
+      newCats.push(...validCats)
+      remaining = numCategories - newCats.length
+      attempts++
+    }
+    if(attempts >= 20) {
+      console.log(`get categories: too many attempts ${attempts}`)
+    }
+    return newCats
   }
 
   useEffect(() => {
-    getCategory()
-    getCategory()
-    getCategory()
-    getCategory()
-    getCategory()
-    getCategory()
+    setIsCategoriesLoading(true)
+    getCategories(6)
+    .then(newCategories => {
+      setCategories(newCategories)
+      setIsCategoriesLoading(false)
+    })
   }, [])
+  console.log({
+    categories,
+  })
 
   return (
-<div className="game-container">
-  <Board
-      handleClueClick={handleClueClick}
-      categories={categories}
-      currentClue={currentClue}
-      answeringQuestion={answeringQuestion}
-  />
-  <p>${money}</p>
-  {
-      answeringQuestion ?
-      <AnswerQuestion
-          handleSubmitAnswer={handleSubmitAnswer}
-          // handleChangeAnswer={this.handleChangeAnswer}
-          clue={currentClue}
+    <div className="game-container">
+      <Board
+          handleClueClick={handleClueClick}
+          categories={categories}
+          isCategoriesLoading={isCategoriesLoading}
+          currentClue={currentClue}
+          answeringQuestion={answeringQuestion}
       />
-      :
-      currentClue ? <ShowAnswer clue={currentClue}/> : null
-  }
-</div>
+      <p>${money}</p>
+      {answeringQuestion && (
+        <AnswerQuestion
+            handleSubmitAnswer={handleSubmitAnswer}
+            clue={currentClue}
+        />
+      )}
+      {!answeringQuestion && currentClue && (
+        <div>
+          <p>Answer: {currentClue.answer}</p>
+        </div>
+      )}
+    </div>
   )
 }
