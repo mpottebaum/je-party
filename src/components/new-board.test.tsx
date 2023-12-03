@@ -19,4 +19,15 @@ describe('Board', () => {
     )
     expect(baseElement).toBeTruthy()
   })
+  it('should fail', async () => {
+    render(
+      <Board
+        categories={mockCategories}
+        isCategoriesLoading={false}
+        answeringQuestion={false}
+        handleClueClick={vi.fn()}
+      />
+    )
+    expect(false).toBeTruthy()
+  })
 })
