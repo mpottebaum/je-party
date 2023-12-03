@@ -1,22 +1,19 @@
 import { expect, it, describe, vi, afterEach } from 'vitest'
 import { render } from '@testing-library/react'
-import { Board } from './new-board'
+import { Answer } from './answer'
 import { mockCategories } from '../mock-data'
 
-describe('Board', () => {
+describe('Answer', () => {
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
-  it('should render', async () => {
+  it('should render', () => {
+    const mockClue = mockCategories[0].clues[100]
     const { baseElement } = render(
-      <Board
-        categories={mockCategories}
-        isCategoriesLoading={false}
-        answeringQuestion={false}
-        handleClueClick={vi.fn()}
-      />,
+      <Answer answeringQuestion={false} currentClue={mockClue} />,
     )
+
     expect(baseElement).toBeTruthy()
   })
 })

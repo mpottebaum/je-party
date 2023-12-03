@@ -1,8 +1,8 @@
 import { expect, it, describe, vi, afterEach, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { GameContainer } from './game-container'
+import { Game } from './game'
 import { mockApiCategories } from '../mock-data'
-describe('GameContainer', () => {
+describe('Game', () => {
   beforeEach(() => {
     vi.spyOn(window, 'fetch')
       .mockResolvedValueOnce(new Response(JSON.stringify(mockApiCategories[0])))
@@ -18,7 +18,7 @@ describe('GameContainer', () => {
   })
 
   it('should render', async () => {
-    const { baseElement } = render(<GameContainer />)
+    const { baseElement } = render(<Game />)
 
     const firstCategoryTitle = await screen.findByText(
       mockApiCategories[0].title.toUpperCase(),

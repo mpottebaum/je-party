@@ -1,21 +1,23 @@
 import { useState } from 'react'
 import { Clue } from '../types'
 
-interface AnswerQuestionProps {
+interface AnswerFormProps {
+  answeringQuestion: boolean
   clue?: Clue
   handleSubmitAnswer: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-export function AnswerQuestion({
+export function AnswerForm({
+  answeringQuestion,
   clue,
   handleSubmitAnswer,
-}: AnswerQuestionProps) {
+}: AnswerFormProps) {
   const [answer, setAnswer] = useState('')
   const handleChangeAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAnswer(event.target.value)
   }
 
-  return (
+  return answeringQuestion ? (
     <div>
       <p>{clue?.question}</p>
       <form onSubmit={handleSubmitAnswer}>
@@ -29,5 +31,5 @@ export function AnswerQuestion({
       </form>
       <p className="airdate">This clue aired on {clue?.airdate}</p>
     </div>
-  )
+  ) : null
 }

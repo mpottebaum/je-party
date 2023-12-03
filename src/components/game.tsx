@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { ApiCategory, Category, Clue } from '../types'
-import { Board } from './new-board'
-import { AnswerQuestion } from './answer-question'
+import { Board } from './board'
+import { AnswerForm } from './answer-form'
 import { API_URL } from '../constants'
 import { allClues, createCategory, isCorrectAnswer } from '../utils'
+import { Answer } from './answer'
 
-export function GameContainer() {
+export function Game() {
   const [categories, setCategories] = useState<Category[]>([])
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true)
   const [answeringQuestion, setAnsweringQuestion] = useState(false)
@@ -104,17 +105,12 @@ export function GameContainer() {
         answeringQuestion={answeringQuestion}
       />
       <p>${money}</p>
-      {answeringQuestion && (
-        <AnswerQuestion
-          handleSubmitAnswer={handleSubmitAnswer}
-          clue={currentClue}
-        />
-      )}
-      {!answeringQuestion && currentClue && (
-        <div>
-          <p>Answer: {currentClue.answer}</p>
-        </div>
-      )}
+      <AnswerForm
+        answeringQuestion={answeringQuestion}
+        handleSubmitAnswer={handleSubmitAnswer}
+        clue={currentClue}
+      />
+      <Answer answeringQuestion={answeringQuestion} currentClue={currentClue} />
     </div>
   )
 }

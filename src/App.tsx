@@ -1,10 +1,10 @@
 import './App.css'
-import { GameContainer } from './components/game-container'
+import { Game } from './components/game'
 
 function App() {
   return (
     <main>
-      <GameContainer />
+      <Game />
     </main>
   )
 }
