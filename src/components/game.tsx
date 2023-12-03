@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { ApiCategory, Category, Clue } from '../types'
+import { Category, Clue } from '../types'
 import { Board } from './board'
 import { AnswerForm } from './answer-form'
-import { API_URL } from '../constants'
-import { allClues, createCategory, isCorrectAnswer } from '../utils'
+import { allClues, isCorrectAnswer } from '../utils'
 import { Answer } from './answer'
+import { fetchCategory } from '../api'
 
 export function Game() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -53,15 +53,6 @@ export function Game() {
     }
   }
 
-  const getCategory = async (): Promise<[Category, boolean]> => {
-    const id = Math.round(Math.random() * 18418)
-    const url = API_URL + `/category?id=${id}`
-    const resp = await fetch(url)
-    const category: ApiCategory = await resp.json()
-
-    return createCategory(category)
-  }
-
   useEffect(() => {
     const getCategories = async (numCategories: number) => {
       const newCats: Category[] = []
@@ -69,7 +60,7 @@ export function Game() {
       let attempts = 0
       while (remaining > 0 && attempts < 20) {
         const promises = Array.from({ length: remaining }).map(() => {
-          return getCategory()
+          return fetchCategory()
         })
         const results = await Promise.all(promises)
         const validCats = results
