@@ -3,7 +3,7 @@ import { ApiCategory, Category, Clue } from '../types'
 import { Board } from './new-board'
 import { AnswerQuestion } from './answer-question'
 import { API_URL } from '../constants'
-import { allClues, createCategoryObj, isCorrectAnswer } from '../utils'
+import { allClues, createCategory, isCorrectAnswer } from '../utils'
 
 export function GameContainer() {
   const [ categories, setCategories ] = useState<Category[]>([])
@@ -53,7 +53,7 @@ export function GameContainer() {
     const resp = await fetch(url)
     const category: ApiCategory = await resp.json()
 
-    return createCategoryObj(category)
+    return createCategory(category)
   }
 
   const getCategories = async (numCategories: number) => {

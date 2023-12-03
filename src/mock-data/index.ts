@@ -1,4 +1,4 @@
-import { ApiCategory } from '../types'
+import { ApiCategory, Category } from '../types'
 
 export const mockApiCategories: ApiCategory[] = [
   {
@@ -4746,3 +4746,402 @@ export const mockInvalidCategory2FewClues: ApiCategory = {
       }
   ]
 }
+
+export const mockCategories: Category[] = [
+    {
+        "id": 72,
+        "title": "POP QUIZ",
+        "clues": {
+            "100": {
+                "id": 313,
+                "answer": "the aluminum can",
+                "question": "Reynolds created the 1st one for pop in 1963",
+                "value": 100,
+                "airdate": "Sun Apr 07 1985",
+                "category_id": 72,
+                "game_id": 7586,
+                "invalid_count": null,
+                "categoryId": 72,
+                "answered": false
+            },
+            "200": {
+                "id": 324,
+                "answer": "Dr Pepper",
+                "question": "Suggested drinking times of this soda were 10, 2 & 4",
+                "value": 200,
+                "airdate": "Sun Apr 07 1985",
+                "category_id": 72,
+                "game_id": 7586,
+                "invalid_count": null,
+                "categoryId": 72,
+                "answered": false
+            },
+            "300": {
+                "id": 92768,
+                "answer": "freedom",
+                "question": "In the Janis Joplin hit \"Me And Bobby McGee\", this is \"just another word for nothin' left to lose\"",
+                "value": 300,
+                "airdate": "Tue May 25 2004",
+                "category_id": 72,
+                "game_id": 2642,
+                "invalid_count": null,
+                "categoryId": 72,
+                "answered": false
+            },
+            "400": {
+                "id": 92774,
+                "answer": "Puff the Magic Dragon",
+                "question": "Little Jackie Paper is friends with this magical beastie",
+                "value": 400,
+                "airdate": "Tue May 25 2004",
+                "category_id": 72,
+                "game_id": 2642,
+                "invalid_count": null,
+                "categoryId": 72,
+                "answered": false
+            },
+            "500": {
+                "id": 92780,
+                "answer": "\"I Shot The Sheriff\"",
+                "question": "John Brown is the title lawman who gets gunned down in this Bob Marley song",
+                "value": 500,
+                "airdate": "Tue May 25 2004",
+                "category_id": 72,
+                "game_id": 2642,
+                "invalid_count": null,
+                "categoryId": 72,
+                "answered": false
+            }
+        }
+    },
+    {
+        "id": 3429,
+        "title": "\"LOVE\" ON FILM",
+        "clues": {
+            "100": {
+                "id": 43936,
+                "answer": "<i>The Love Bug</i>",
+                "question": "This 1969 film about a Volkswagen named Herbie was one of Disney's most successful films",
+                "value": 100,
+                "airdate": "Sun Oct 01 1995",
+                "category_id": 3429,
+                "game_id": 6649,
+                "invalid_count": null,
+                "categoryId": 3429,
+                "answered": false
+            },
+            "200": {
+                "id": 43942,
+                "answer": "<i>Love Story</i>",
+                "question": "Ali MacGraw played Jenny Cavilleri in this 1970 tearjerker",
+                "value": 200,
+                "airdate": "Sun Oct 01 1995",
+                "category_id": 3429,
+                "game_id": 6649,
+                "invalid_count": null,
+                "categoryId": 3429,
+                "answered": false
+            },
+            "300": {
+                "id": 43948,
+                "answer": "<i>Love Me Tender</i>",
+                "question": "\"The Reno Brothers\" was the original title for this first Elvis Presley movie",
+                "value": 300,
+                "airdate": "Sun Oct 01 1995",
+                "category_id": 3429,
+                "game_id": 6649,
+                "invalid_count": null,
+                "categoryId": 3429,
+                "answered": false
+            },
+            "400": {
+                "id": 43954,
+                "answer": "<i>The Loved One</i>",
+                "question": "Tony Richardson directed this spoof of the funeral industry based on an Evelyn Waugh novel",
+                "value": 400,
+                "airdate": "Sun Oct 01 1995",
+                "category_id": 3429,
+                "game_id": 6649,
+                "invalid_count": null,
+                "categoryId": 3429,
+                "answered": false
+            },
+            "500": {
+                "id": 43960,
+                "answer": "<i>The Love Machine</i>",
+                "question": "This film based on a Jacqueline Susann novel is set at a television network",
+                "value": 500,
+                "airdate": "Sun Oct 01 1995",
+                "category_id": 3429,
+                "game_id": 6649,
+                "invalid_count": null,
+                "categoryId": 3429,
+                "answered": false
+            }
+        }
+    },
+    {
+        "id": 5490,
+        "title": "THE NFL",
+        "clues": {
+            "100": {
+                "id": 62311,
+                "answer": "Arizona Cardinals",
+                "question": "A little birdie told us, in 1998, this Arizona team is celebrating its 100th anniversary",
+                "value": 100,
+                "airdate": "Tue Dec 08 1998",
+                "category_id": 5490,
+                "game_id": 922,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "200": {
+                "id": 62323,
+                "answer": "Pittsburgh Steelers",
+                "question": "During the '70s this team's lineup included Terry Bradshaw, Lynn Swann & Mean Joe Greene",
+                "value": 200,
+                "airdate": "Tue Dec 08 1998",
+                "category_id": 5490,
+                "game_id": 922,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "300": {
+                "id": 120912,
+                "answer": "Brett Favre",
+                "question": "In 2007 this Green Bay QB eclipsed Dan Marino's career record for TD passes",
+                "value": 300,
+                "airdate": "Thu Apr 17 2008",
+                "category_id": 5490,
+                "game_id": 2430,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "400": {
+                "id": 120918,
+                "answer": "the Raiders",
+                "question": "After coaching this team for 3 seasons, Al Davis became one of its owners",
+                "value": 400,
+                "airdate": "Thu Apr 17 2008",
+                "category_id": 5490,
+                "game_id": 2430,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "500": {
+                "id": 120924,
+                "answer": "the Colts",
+                "question": "Prior to the Ravens, the city of Baltimore had only one other NFL team name in its history--this one",
+                "value": 500,
+                "airdate": "Thu Apr 17 2008",
+                "category_id": 5490,
+                "game_id": 2430,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            }
+        }
+    },
+    {
+        "id": 201,
+        "title": "BRAZIL",
+        "clues": {
+            "100": {
+                "id": 2834,
+                "answer": "food",
+                "question": "Less than 1% of Brazil's land is devoted to producing this necessity of life",
+                "value": 100,
+                "airdate": "Wed Feb 05 1986",
+                "category_id": 201,
+                "game_id": 2263,
+                "invalid_count": null,
+                "categoryId": 201,
+                "answered": false
+            },
+            "200": {
+                "id": 2840,
+                "answer": "the 20th century",
+                "question": "The University of Brazil, the country's oldest, wasn't founded until this century",
+                "value": 200,
+                "airdate": "Wed Feb 05 1986",
+                "category_id": 201,
+                "game_id": 2263,
+                "invalid_count": null,
+                "categoryId": 201,
+                "answered": false
+            },
+            "300": {
+                "id": 2846,
+                "answer": "Brasilia",
+                "question": "The layout of this, the capital, resembles a jet airliner",
+                "value": 300,
+                "airdate": "Wed Feb 05 1986",
+                "category_id": 201,
+                "game_id": 2263,
+                "invalid_count": null,
+                "categoryId": 201,
+                "answered": false
+            },
+            "400": {
+                "id": 2852,
+                "answer": "SÃ£o Paulo",
+                "question": "Larger than Rio, it's the industrial heart of Brazil & fastest growing city in Latin America",
+                "value": 400,
+                "airdate": "Wed Feb 05 1986",
+                "category_id": 201,
+                "game_id": 2263,
+                "invalid_count": null,
+                "categoryId": 201,
+                "answered": false
+            },
+            "500": {
+                "id": 2857,
+                "answer": "<i>The Emerald Forest</i>",
+                "question": "1985 film set in Brazil that featured the fierce people, the invisible people, & the bat people",
+                "value": 500,
+                "airdate": "Wed Feb 05 1986",
+                "category_id": 201,
+                "game_id": 2263,
+                "invalid_count": null,
+                "categoryId": 201,
+                "answered": false
+            }
+        }
+    },
+    {
+        "id": 5490,
+        "title": "THE NFL",
+        "clues": {
+            "100": {
+                "id": 62311,
+                "answer": "Arizona Cardinals",
+                "question": "A little birdie told us, in 1998, this Arizona team is celebrating its 100th anniversary",
+                "value": 100,
+                "airdate": "Tue Dec 08 1998",
+                "category_id": 5490,
+                "game_id": 922,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "200": {
+                "id": 62323,
+                "answer": "Pittsburgh Steelers",
+                "question": "During the '70s this team's lineup included Terry Bradshaw, Lynn Swann & Mean Joe Greene",
+                "value": 200,
+                "airdate": "Tue Dec 08 1998",
+                "category_id": 5490,
+                "game_id": 922,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "300": {
+                "id": 120912,
+                "answer": "Brett Favre",
+                "question": "In 2007 this Green Bay QB eclipsed Dan Marino's career record for TD passes",
+                "value": 300,
+                "airdate": "Thu Apr 17 2008",
+                "category_id": 5490,
+                "game_id": 2430,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "400": {
+                "id": 120918,
+                "answer": "the Raiders",
+                "question": "After coaching this team for 3 seasons, Al Davis became one of its owners",
+                "value": 400,
+                "airdate": "Thu Apr 17 2008",
+                "category_id": 5490,
+                "game_id": 2430,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            },
+            "500": {
+                "id": 120924,
+                "answer": "the Colts",
+                "question": "Prior to the Ravens, the city of Baltimore had only one other NFL team name in its history--this one",
+                "value": 500,
+                "airdate": "Thu Apr 17 2008",
+                "category_id": 5490,
+                "game_id": 2430,
+                "invalid_count": null,
+                "categoryId": 5490,
+                "answered": false
+            }
+        }
+    },
+    {
+        "id": 5095,
+        "title": "CDS",
+        "clues": {
+            "100": {
+                "id": 59470,
+                "answer": "\"Bedtime Stories\"",
+                "question": "Madonna told these \"stories\" on a 1994 CD",
+                "value": 100,
+                "airdate": "Sun Apr 25 1999",
+                "category_id": 5095,
+                "game_id": 2355,
+                "invalid_count": null,
+                "categoryId": 5095,
+                "answered": false
+            },
+            "200": {
+                "id": 59482,
+                "answer": "\"Nevermind\"",
+                "question": "On a Nirvana CD, this title follows the words \"Oh well, whatever...\"",
+                "value": 200,
+                "airdate": "Sun Apr 25 1999",
+                "category_id": 5095,
+                "game_id": 2355,
+                "invalid_count": null,
+                "categoryId": 5095,
+                "answered": false
+            },
+            "300": {
+                "id": 88865,
+                "answer": "\"The Joshua Tree\"",
+                "question": "The 1987 Album of the Year Grammy went to U2 for this album",
+                "value": 300,
+                "airdate": "Wed Jan 01 2003",
+                "category_id": 5095,
+                "game_id": 2901,
+                "invalid_count": null,
+                "categoryId": 5095,
+                "answered": false
+            },
+            "400": {
+                "id": 88871,
+                "answer": "<i>Charlie\\'s Angels</i>",
+                "question": "Appropriately, the song \"Heaven Must Be Missing An Angel\" is on the soundtrack to this 2000 girl power flick",
+                "value": 400,
+                "airdate": "Wed Jan 01 2003",
+                "category_id": 5095,
+                "game_id": 2901,
+                "invalid_count": null,
+                "categoryId": 5095,
+                "answered": false
+            },
+            "500": {
+                "id": 88877,
+                "answer": "Dave Matthews",
+                "question": "\"The Space Between\" is one of the tracks on \"Everyday\" by this man's \"Band\"",
+                "value": 500,
+                "airdate": "Wed Jan 01 2003",
+                "category_id": 5095,
+                "game_id": 2901,
+                "invalid_count": null,
+                "categoryId": 5095,
+                "answered": false
+            }
+        }
+    }
+]
