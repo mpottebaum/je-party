@@ -22,7 +22,7 @@ export function Board({
             {categories.map(category => {
                 const clueValues = Object.keys(category.clues)
                 return (
-                  <div className="category">
+                  <div key={category.id} className="category">
                     <div className="category-title">
                       <p>{category.title}</p>
                     </div>
@@ -33,6 +33,7 @@ export function Board({
                       const selectedClass = (currentClue?.id === clue.id && answeringQuestion === true) ? " selected" : ""
                       return (
                         <div
+                          key={clue.id}
                           onClick={() => handleClueClick(clue.id)}
                           className={"clue-tile" + selectedClass}
                         >
