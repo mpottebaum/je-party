@@ -61,29 +61,29 @@ export function GameContainer() {
     return createCategory(category)
   }
 
-  const getCategories = async (numCategories: number) => {
-    const newCats: Category[] = []
-    let remaining = numCategories
-    let attempts = 0
-    while (remaining > 0 && attempts < 20) {
-      const promises = Array.from({ length: remaining }).map(() => {
-        return getCategory()
-      })
-      const results = await Promise.all(promises)
-      const validCats = results
-        .filter(([, isValid]) => isValid)
-        .map(([cat]) => cat)
-      newCats.push(...validCats)
-      remaining = numCategories - newCats.length
-      attempts++
-    }
-    if (attempts >= 20) {
-      console.log(`get categories: too many attempts ${attempts}`)
-    }
-    return newCats
-  }
-
   useEffect(() => {
+    const getCategories = async (numCategories: number) => {
+      const newCats: Category[] = []
+      let remaining = numCategories
+      let attempts = 0
+      while (remaining > 0 && attempts < 20) {
+        const promises = Array.from({ length: remaining }).map(() => {
+          return getCategory()
+        })
+        const results = await Promise.all(promises)
+        const validCats = results
+          .filter(([, isValid]) => isValid)
+          .map(([cat]) => cat)
+        newCats.push(...validCats)
+        remaining = numCategories - newCats.length
+        attempts++
+      }
+      if (attempts >= 20) {
+        console.log(`get categories: too many attempts ${attempts}`)
+      }
+      return newCats
+    }
+
     setIsCategoriesLoading(true)
     getCategories(6).then((newCategories) => {
       setCategories(newCategories)
