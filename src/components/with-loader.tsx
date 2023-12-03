@@ -1,13 +1,13 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 import { Circles } from 'react-loader-spinner'
 
 interface WithLoaderProps {
-  children: ReactNode;
-  isLoading: boolean;
+  children: ReactNode
+  isLoading: boolean
 }
 
 export function WithLoader({ children, isLoading }: WithLoaderProps) {
-  if(isLoading) {
+  if (isLoading) {
     return (
       <Circles
         color="#00BFFF"

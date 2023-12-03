@@ -9,7 +9,9 @@ async function enableMocking() {
     return
   }
   // @ts-expect-error TODO: will fix
-  const { worker } = (await import('./mocks/browser.js')) as { worker: SetupWorker;}
+  const { worker } = (await import('./mocks/browser.js')) as {
+    worker: SetupWorker
+  }
   return worker.start()
 }
 

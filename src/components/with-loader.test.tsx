@@ -6,27 +6,19 @@ describe('WithLoader', () => {
   it('should render children when not loading', () => {
     const mockChildren = 'children'
     const mockIsLoading = false
-    render(
-      <WithLoader isLoading={mockIsLoading}>
-        {mockChildren}
-      </WithLoader>
-    )
+    render(<WithLoader isLoading={mockIsLoading}>{mockChildren}</WithLoader>)
 
     const renderedChildren = screen.queryByText(mockChildren)
     const spinner = screen.queryByRole('status')
     expect(renderedChildren).toBeTruthy()
     expect(spinner).toBeFalsy()
   })
-  
+
   it('should render circle spinner when loading', () => {
     const mockChildren = 'children'
     const mockIsLoading = true
-    render(
-      <WithLoader isLoading={mockIsLoading}>
-        {mockChildren}
-      </WithLoader>
-    )
-    
+    render(<WithLoader isLoading={mockIsLoading}>{mockChildren}</WithLoader>)
+
     const renderedChildren = screen.queryByText(mockChildren)
     const spinner = screen.queryByRole('status')
     expect(renderedChildren).toBeFalsy()

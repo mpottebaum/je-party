@@ -18,11 +18,11 @@ describe('GameContainer', () => {
   })
 
   it('should render', async () => {
-    const { baseElement } = render(
-      <GameContainer />
-    )
+    const { baseElement } = render(<GameContainer />)
 
-    const firstCategoryTitle = await screen.findByText(mockApiCategories[0].title.toUpperCase())
+    const firstCategoryTitle = await screen.findByText(
+      mockApiCategories[0].title.toUpperCase(),
+    )
     expect(firstCategoryTitle).toBeTruthy()
     expect(baseElement).toBeTruthy()
   })

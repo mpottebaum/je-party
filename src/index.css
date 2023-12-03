@@ -2,7 +2,10 @@ html {
   background-color: blue;
 }
 
-html, body, #root, main {
+html,
+body,
+#root,
+main {
   height: 100%;
 }
 

@@ -2,7 +2,6 @@ import { expect, it, describe } from 'vitest'
 import { createClue } from './create-clue'
 import { mockCategories } from '../mock-data'
 
-
 describe('createClue', () => {
   const mockClue = mockCategories[0].clues[100]
   it('should return a clue with an answered property', () => {

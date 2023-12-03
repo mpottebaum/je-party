@@ -15,7 +15,7 @@ describe('Board', () => {
         isCategoriesLoading={false}
         answeringQuestion={false}
         handleClueClick={vi.fn()}
-      />
+      />,
     )
     expect(baseElement).toBeTruthy()
   })

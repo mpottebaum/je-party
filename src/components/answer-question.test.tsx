@@ -11,10 +11,7 @@ describe('AnswerQuestion', () => {
   it('should render', () => {
     const mockClue = mockCategories[0].clues[100]
     const { baseElement } = render(
-      <AnswerQuestion
-        clue={mockClue}
-        handleSubmitAnswer={vi.fn()}
-      />
+      <AnswerQuestion clue={mockClue} handleSubmitAnswer={vi.fn()} />,
     )
 
     expect(baseElement).toBeTruthy()

@@ -6,33 +6,38 @@ import { API_URL } from '../constants'
 import { allClues, createCategory, isCorrectAnswer } from '../utils'
 
 export function GameContainer() {
-  const [ categories, setCategories ] = useState<Category[]>([])
-  const [ isCategoriesLoading, setIsCategoriesLoading ] = useState(true)
-  const [ answeringQuestion, setAnsweringQuestion ] = useState(false)
-  const [ money, setMoney ] = useState(0)
-  const [ currentClue, setCurrentClue ] = useState<Clue | undefined>()
+  const [categories, setCategories] = useState<Category[]>([])
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true)
+  const [answeringQuestion, setAnsweringQuestion] = useState(false)
+  const [money, setMoney] = useState(0)
+  const [currentClue, setCurrentClue] = useState<Clue | undefined>()
 
   const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     e.persist()
-    setMoney(prevMoney => {
+    setMoney((prevMoney) => {
       let updatedMoney
-      if(isCorrectAnswer((e.currentTarget.elements[0] as HTMLInputElement).value, currentClue?.answer ?? '')) {
-          updatedMoney = prevMoney + (currentClue?.value ?? 0)
+      if (
+        isCorrectAnswer(
+          (e.currentTarget.elements[0] as HTMLInputElement).value,
+          currentClue?.answer ?? '',
+        )
+      ) {
+        updatedMoney = prevMoney + (currentClue?.value ?? 0)
       } else {
-          updatedMoney = prevMoney - (currentClue?.value ?? 0)
+        updatedMoney = prevMoney - (currentClue?.value ?? 0)
       }
       return updatedMoney
     })
     setAnsweringQuestion(false)
-    setCategories(prevCategories => {
-      return prevCategories.map(category => {
-        if(category.id === currentClue?.categoryId) {
+    setCategories((prevCategories) => {
+      return prevCategories.map((category) => {
+        if (category.id === currentClue?.categoryId) {
           category.clues[currentClue.value ?? 0] = {
             ...currentClue,
             answered: true,
           }
-          return category 
+          return category
         }
         return category
       })
@@ -40,8 +45,8 @@ export function GameContainer() {
   }
 
   const handleClueClick = (clueId: number) => {
-    const clue = allClues(categories).find(clue => clue.id === clueId)
-    if(!answeringQuestion && clue?.answered === false) {
+    const clue = allClues(categories).find((clue) => clue.id === clueId)
+    if (!answeringQuestion && clue?.answered === false) {
       setAnsweringQuestion(true)
       setCurrentClue(clue)
     }
@@ -60,7 +65,7 @@ export function GameContainer() {
     const newCats: Category[] = []
     let remaining = numCategories
     let attempts = 0
-    while(remaining > 0 && attempts < 20) {
+    while (remaining > 0 && attempts < 20) {
       const promises = Array.from({ length: remaining }).map(() => {
         return getCategory()
       })
@@ -72,7 +77,7 @@ export function GameContainer() {
       remaining = numCategories - newCats.length
       attempts++
     }
-    if(attempts >= 20) {
+    if (attempts >= 20) {
       console.log(`get categories: too many attempts ${attempts}`)
     }
     return newCats
@@ -80,8 +85,7 @@ export function GameContainer() {
 
   useEffect(() => {
     setIsCategoriesLoading(true)
-    getCategories(6)
-    .then(newCategories => {
+    getCategories(6).then((newCategories) => {
       setCategories(newCategories)
       setIsCategoriesLoading(false)
     })
@@ -93,17 +97,17 @@ export function GameContainer() {
   return (
     <div className="game-container">
       <Board
-          handleClueClick={handleClueClick}
-          categories={categories}
-          isCategoriesLoading={isCategoriesLoading}
-          currentClue={currentClue}
-          answeringQuestion={answeringQuestion}
+        handleClueClick={handleClueClick}
+        categories={categories}
+        isCategoriesLoading={isCategoriesLoading}
+        currentClue={currentClue}
+        answeringQuestion={answeringQuestion}
       />
       <p>${money}</p>
       {answeringQuestion && (
         <AnswerQuestion
-            handleSubmitAnswer={handleSubmitAnswer}
-            clue={currentClue}
+          handleSubmitAnswer={handleSubmitAnswer}
+          clue={currentClue}
         />
       )}
       {!answeringQuestion && currentClue && (
