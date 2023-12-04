@@ -15,11 +15,16 @@
 
 .category-title,
 .clue-tile {
-  height: 5rem;
-  width: 10rem;
+  height: 6rem;
+  width: 12rem;
+  /* padding: 1rem 2rem; */
   border-top: 0.25rem solid black;
   border-right: 0.25rem solid black;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
 }
 
 .category:nth-child(1) {
@@ -32,15 +37,21 @@
 
 .category-title {
   color: white;
-}
-
-.clue-tile {
-  color: yellow;
   font-size: 1.5rem;
 }
 
+.clue-tile {
+  color: #d69f4c;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
 .selected {
-  border: solid yellow;
+  border: solid #d69f4c;
+}
+
+.answered {
+  cursor: default;
 }
 
 .airdate {
