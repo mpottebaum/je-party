@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 
+* {
+  margin: 0;
+}
+
 html {
   background-color: #071277;
 }
@@ -12,7 +16,6 @@ main {
 }
 
 body {
-  margin: 0;
   font-family: 'Oswald', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

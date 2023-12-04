@@ -55,5 +55,48 @@
 }
 
 .airdate {
-  font-size: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.answer-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.answer-submit {
+  cursor: pointer;
+}
+
+.answer-form input {
+  border-color: #00020f;
+  border-style: solid;
+  border-width: 0.25rem;
+  font-family: Oswald, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.answer-form button[type='submit'] {
+  background-color: #d69f4c;
+  color: white;
+  font-family: Oswald, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-color: #00020f;
+  border-style: solid;
+  border-width: 0.25rem;
+  margin-top: 1rem;
+}
+
+.answer-form button[type='submit']:hover {
+  border-color: white;
+}
+
+.question,
+.money,
+.answer {
+  font-size: 1.5rem;
+  padding-top: 1rem;
 }

@@ -69,7 +69,7 @@ export function Game() {
         currentClue={currentClue}
         answeringQuestion={answeringQuestion}
       />
-      <p>${money}</p>
+      <p className="money">${money}</p>
       <AnswerForm
         answeringQuestion={answeringQuestion}
         handleSubmitAnswer={handleSubmitAnswer}
