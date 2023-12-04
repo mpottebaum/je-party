@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Category, Clue } from '../types'
 import { Board } from './board'
 import { AnswerForm } from './answer-form'
-import { allClues, getCategories, isCorrectAnswer } from '../utils'
+import { getCategories, isCorrectAnswer } from '../utils'
 import { Answer } from './answer'
 
 export function Game() {
@@ -15,38 +15,28 @@ export function Game() {
   const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     e.persist()
-    setMoney((prevMoney) => {
-      let updatedMoney
-      if (
-        isCorrectAnswer(
-          (e.currentTarget.elements[0] as HTMLInputElement).value,
-          currentClue?.answer ?? '',
-        )
-      ) {
-        updatedMoney = prevMoney + (currentClue?.value ?? 0)
-      } else {
-        updatedMoney = prevMoney - (currentClue?.value ?? 0)
-      }
-      return updatedMoney
-    })
+    const currentClueValue = currentClue?.value ?? 0
+    setMoney((prevMoney) =>
+      isCorrectAnswer(
+        (e.currentTarget.elements[0] as HTMLInputElement).value,
+        currentClue?.answer ?? '',
+      )
+        ? prevMoney + currentClueValue
+        : prevMoney - currentClueValue,
+    )
     setAnsweringQuestion(false)
-    setCategories((prevCategories) => {
-      return prevCategories.map((category) => {
+    setCategories((prevCategories) =>
+      prevCategories.map((category) => {
         if (category.id === currentClue?.categoryId) {
-          category.clues[currentClue.value ?? 0] = {
-            ...currentClue,
-            answered: true,
-          }
-          return category
+          category.clues[currentClueValue].answered = true
         }
         return category
-      })
-    })
+      }),
+    )
   }
 
-  const handleClueClick = (clueId: number) => {
-    const clue = allClues(categories).find((clue) => clue.id === clueId)
-    if (!answeringQuestion && clue?.answered === false) {
+  const handleClueClick = (clue: Clue) => {
+    if (!answeringQuestion && clue.answered === false) {
       setAnsweringQuestion(true)
       setCurrentClue(clue)
     }
