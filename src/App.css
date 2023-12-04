@@ -17,8 +17,17 @@
 .clue-tile {
   height: 5rem;
   width: 10rem;
-  border: solid black;
+  border-top: 0.25rem solid black;
+  border-right: 0.25rem solid black;
   box-sizing: border-box;
+}
+
+.category:nth-child(1) {
+  border-left: 0.25rem solid black;
+}
+
+.clue-tile:nth-child(6) {
+  border-bottom: 0.25rem solid black;
 }
 
 .category-title {
