@@ -2,17 +2,11 @@ import { expect, it, describe, vi, afterEach, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { Game } from './game'
 import { mockCategories } from '../mock-data'
-import * as api from '../api'
+import * as utils from '../utils'
 
 describe('Game', () => {
   beforeEach(() => {
-    vi.spyOn(api, 'fetchCategory')
-      .mockResolvedValueOnce([mockCategories[0], true])
-      .mockResolvedValueOnce([mockCategories[1], true])
-      .mockResolvedValueOnce([mockCategories[2], true])
-      .mockResolvedValueOnce([mockCategories[3], true])
-      .mockResolvedValueOnce([mockCategories[4], true])
-      .mockResolvedValueOnce([mockCategories[5], true])
+    vi.spyOn(utils, 'getCategories').mockResolvedValue(mockCategories)
   })
 
   afterEach(() => {

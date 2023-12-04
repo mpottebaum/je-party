@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react'
 import { Category, Clue } from '../types'
 import { Board } from './board'
 import { AnswerForm } from './answer-form'
-import { allClues, isCorrectAnswer } from '../utils'
+import { allClues, getCategories, isCorrectAnswer } from '../utils'
 import { Answer } from './answer'
-import { fetchCategory } from '../api'
 
 export function Game() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -54,37 +53,12 @@ export function Game() {
   }
 
   useEffect(() => {
-    const getCategories = async (numCategories: number) => {
-      const newCats: Category[] = []
-      let remaining = numCategories
-      let attempts = 0
-      while (remaining > 0 && attempts < 20) {
-        const promises = Array.from({ length: remaining }).map(() => {
-          return fetchCategory()
-        })
-        const results = await Promise.all(promises)
-        const validCats = results
-          .filter(([, isValid]) => isValid)
-          .map(([cat]) => cat)
-        newCats.push(...validCats)
-        remaining = numCategories - newCats.length
-        attempts++
-      }
-      if (attempts >= 20) {
-        console.log(`get categories: too many attempts ${attempts}`)
-      }
-      return newCats
-    }
-
     setIsCategoriesLoading(true)
     getCategories(6).then((newCategories) => {
       setCategories(newCategories)
       setIsCategoriesLoading(false)
     })
   }, [])
-  console.log({
-    categories,
-  })
 
   return (
     <div className="game-container">
