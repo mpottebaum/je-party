@@ -6,7 +6,7 @@ interface BoardProps {
   isCategoriesLoading: boolean
   currentClue?: Clue
   answeringQuestion: boolean
-  handleClueClick: (id: number) => void
+  handleClueClick: (clue: Clue) => void
 }
 
 export function Board({
@@ -37,7 +37,7 @@ export function Board({
                 return (
                   <div
                     key={clue.id}
-                    onClick={() => handleClueClick(clue.id)}
+                    onClick={() => handleClueClick(clue)}
                     className={
                       'clue-tile' +
                       selectedClass +
