@@ -7,8 +7,6 @@ interface AnswerProps {
 
 export function Answer({ answeringQuestion, currentClue }: AnswerProps) {
   return !answeringQuestion && currentClue ? (
-    <div>
-      <p>Answer: {currentClue.answer}</p>
-    </div>
+    <p className="answer">Answer: {currentClue.answer}</p>
   ) : null
 }

@@ -38,9 +38,13 @@ export function Board({
                   <div
                     key={clue.id}
                     onClick={() => handleClueClick(clue.id)}
-                    className={'clue-tile' + selectedClass}
+                    className={
+                      'clue-tile' +
+                      selectedClass +
+                      (clue.answered ? ' answered' : '')
+                    }
                   >
-                    <p>{clue.answered ? null : clue.value}</p>
+                    <p>{clue.answered ? null : `$${clue.value}`}</p>
                   </div>
                 )
               })}

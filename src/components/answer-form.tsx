@@ -19,15 +19,17 @@ export function AnswerForm({
 
   return answeringQuestion ? (
     <div>
-      <p>{clue?.question}</p>
-      <form onSubmit={handleSubmitAnswer}>
+      <p className="question">{clue?.question}</p>
+      <form onSubmit={handleSubmitAnswer} className="answer-form">
         <input
           onChange={handleChangeAnswer}
           type="text"
           name="answer"
           value={answer}
         />
-        <input type="submit" value="Submit Answer" />
+        <button type="submit" className="answer-submit">
+          Submit Answer
+        </button>
       </form>
       <p className="airdate">This clue aired on {clue?.airdate}</p>
     </div>
