@@ -9,6 +9,18 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       provider: 'v8',
-    }
+      include: [
+        'src',
+      ],
+      exclude: [
+        '**/constants',
+        '**/mock-data',
+        '**/msw',
+        '**/types',
+        'src/*.tsx',
+        'src/*.ts',
+      ]
+    },
+    
   },
 })
