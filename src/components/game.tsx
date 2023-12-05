@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Category, Clue } from '../types'
 import { Board } from './board'
-import { AnswerForm } from './answer-form'
 import { getCategories, isCorrectAnswer } from '../utils'
-import { Answer } from './answer'
 
 const NUM_CATEGORIES = 6
 
@@ -13,20 +11,21 @@ export function Game() {
   const [answeringQuestion, setAnsweringQuestion] = useState(false)
   const [money, setMoney] = useState(0)
   const [currentClue, setCurrentClue] = useState<Clue | undefined>()
+  const [answer, setAnswer] = useState('')
 
+  const handleChangeAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAnswer(event.target.value)
+  }
   const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    e.persist()
     const currentClueValue = currentClue?.value ?? 0
     setMoney((prevMoney) =>
-      isCorrectAnswer(
-        (e.currentTarget.elements[0] as HTMLInputElement).value,
-        currentClue?.answer ?? '',
-      )
+      isCorrectAnswer(answer, currentClue?.answer ?? '')
         ? prevMoney + currentClueValue
         : prevMoney - currentClueValue,
     )
     setAnsweringQuestion(false)
+    setAnswer('')
     setCategories((prevCategories) =>
       prevCategories.map((category) => {
         if (category.id === currentClue?.categoryId) {
@@ -36,25 +35,12 @@ export function Game() {
       }),
     )
   }
-
   const handleClueClick = (clue: Clue) => {
     if (!answeringQuestion && clue.answered === false) {
       setAnsweringQuestion(true)
       setCurrentClue(clue)
     }
   }
-
-  // const handleSetCategories = (newCategories: Category[]) => {
-  //   const sanitizedNewbies = newCategories.length > NUM_CATEGORIES ? newCategories.slice(0, NUM_CATEGORIES) : newCategories
-  //   setCategories(prevCats => {
-  //     const numNewbies = sanitizedNewbies.length
-  //     const catPad = numNewbies < NUM_CATEGORIES ? prevCats.slice(0, NUM_CATEGORIES - numNewbies) : []
-  //     return [
-  //       ...newCategories,
-  //       ...catPad,
-  //     ]
-  //   })
-  // }
 
   useEffect(() => {
     setIsCategoriesLoading(true)
@@ -65,7 +51,7 @@ export function Game() {
   }, [])
 
   return (
-    <div className="game-container">
+    <section className="game-container">
       <Board
         handleClueClick={handleClueClick}
         categories={categories}
@@ -73,13 +59,31 @@ export function Game() {
         currentClue={currentClue}
         answeringQuestion={answeringQuestion}
       />
-      <p className="money">${money}</p>
-      <AnswerForm
-        answeringQuestion={answeringQuestion}
-        handleSubmitAnswer={handleSubmitAnswer}
-        clue={currentClue}
-      />
-      <Answer answeringQuestion={answeringQuestion} currentClue={currentClue} />
-    </div>
+      <section>
+        <p className="money">${money}</p>
+        {answeringQuestion && (
+          <article>
+            <p className="question">{currentClue?.question}</p>
+            <form onSubmit={handleSubmitAnswer} className="answer-form">
+              <input
+                onChange={handleChangeAnswer}
+                type="text"
+                name="answer"
+                value={answer}
+              />
+              <button type="submit" className="answer-submit">
+                Submit Answer
+              </button>
+            </form>
+            <p className="airdate">This clue aired on {currentClue?.airdate}</p>
+          </article>
+        )}
+        {!answeringQuestion && currentClue && (
+          <article>
+            <p className="answer">Answer: {currentClue.answer}</p>
+          </article>
+        )}
+      </section>
+    </section>
   )
 }

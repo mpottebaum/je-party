@@ -42,7 +42,7 @@
     "vitest": "^0.34.6"
   },
   "msw": {
-    "workerDirectory": "src/mocks"
+    "workerDirectory": "src/msw"
   },
   "engines": {
     "node": "^18"

@@ -17,7 +17,7 @@ export function Board({
   answeringQuestion,
 }: BoardProps) {
   return (
-    <div className="board">
+    <section className="board">
       <WithLoader isLoading={isCategoriesLoading}>
         {categories.map((category) => {
           const clueValues = Object.keys(category.clues)
@@ -52,6 +52,6 @@ export function Board({
           )
         })}
       </WithLoader>
-    </div>
+    </section>
   )
 }

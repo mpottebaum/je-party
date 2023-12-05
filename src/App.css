@@ -17,7 +17,6 @@
 .clue-tile {
   height: 6rem;
   width: 12rem;
-  /* padding: 1rem 2rem; */
   border-top: 0.25rem solid black;
   border-right: 0.25rem solid black;
   box-sizing: border-box;
