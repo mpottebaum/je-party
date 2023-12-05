@@ -20,11 +20,11 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: 'setup node'
+      - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: 'install dependencies'
+      - name: install dependencies
         run: npm i
       - name: build
         run: npm run build
@@ -35,11 +35,11 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: 'setup node'
+      - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: 'install dependencies'
+      - name: install dependencies
         run: npm i
       - name: lint
         run: npm run lint
@@ -50,11 +50,11 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: 'setup node'
+      - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: 'install dependencies'
+      - name: install dependencies
         run: npm i
-      - name: lint
-        run: npm run test
+      - name: test
+        run: npm run test:coverage
