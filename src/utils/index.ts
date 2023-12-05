@@ -1,4 +1,3 @@
-export * from './all-clues'
 export * from './create-category'
 export * from './create-clue'
 export * from './format-airdate'

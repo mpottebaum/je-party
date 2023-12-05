@@ -16,6 +16,11 @@ export async function getCategories(numCategories: number, maxAttempts = 20) {
     newCats.push(...validCats)
     remaining = numCategories - newCats.length
     attempts++
+    // console.log({
+    //   remaining,
+    //   attempts,
+    //   newCats,
+    // })
   }
   if (attempts >= maxAttempts) {
     console.log(`get categories: too many attempts ${attempts}`)
