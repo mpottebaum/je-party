@@ -5,6 +5,8 @@ import { AnswerForm } from './answer-form'
 import { getCategories, isCorrectAnswer } from '../utils'
 import { Answer } from './answer'
 
+const NUM_CATEGORIES = 6
+
 export function Game() {
   const [categories, setCategories] = useState<Category[]>([])
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true)
@@ -42,9 +44,21 @@ export function Game() {
     }
   }
 
+  // const handleSetCategories = (newCategories: Category[]) => {
+  //   const sanitizedNewbies = newCategories.length > NUM_CATEGORIES ? newCategories.slice(0, NUM_CATEGORIES) : newCategories
+  //   setCategories(prevCats => {
+  //     const numNewbies = sanitizedNewbies.length
+  //     const catPad = numNewbies < NUM_CATEGORIES ? prevCats.slice(0, NUM_CATEGORIES - numNewbies) : []
+  //     return [
+  //       ...newCategories,
+  //       ...catPad,
+  //     ]
+  //   })
+  // }
+
   useEffect(() => {
     setIsCategoriesLoading(true)
-    getCategories(6).then((newCategories) => {
+    getCategories(NUM_CATEGORIES).then((newCategories) => {
       setCategories(newCategories)
       setIsCategoriesLoading(false)
     })
