@@ -5,14 +5,14 @@ import {
   vi,
   beforeEach,
   afterEach,
-  SpyInstance,
+  type MockInstance,
 } from 'vitest'
 import { getCategories } from './get-categories'
 import { mockCategories } from '../mock-data'
 import * as api from '../api'
 
 describe('getCategories', () => {
-  let fetchCategorySpy: SpyInstance
+  let fetchCategorySpy: MockInstance
   beforeEach(() => {
     fetchCategorySpy = vi.spyOn(api, 'fetchCategory')
   })

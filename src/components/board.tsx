@@ -1,4 +1,4 @@
-import { Clue, Category as ICategory } from '../types'
+import type { Clue, Category as ICategory } from '../types'
 import { WithLoader } from './with-loader'
 
 interface BoardProps {

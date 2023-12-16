@@ -1,7 +1,8 @@
-import { useRouteError } from 'react-router-dom'
+// import { useRouteError } from 'react-router-dom'
 
 export function ErrorBoundary() {
-  const error = useRouteError()
+  // const error = useRouteError()
+  const error = new Error()
   console.error(error)
   const yoinkifiedErrorMassage = JSON.stringify(
     error && typeof error === 'object' && 'message' in error
