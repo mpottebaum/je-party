@@ -7,7 +7,7 @@ interface WithLoaderProps {
 
 export function WithLoader({ children, isLoading }: WithLoaderProps) {
   if (isLoading) {
-    return <p>Loading</p>
+    return <p role="status">Loading</p>
   }
   return children
 }
