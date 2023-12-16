@@ -14,6 +14,21 @@ on:
       - main
 
 jobs:
+  check:
+    name: astro check
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: install dependencies
+        run: npm i
+      - name: astro check
+        run: npm run build:check
+
   build:
     name: build
     runs-on: ubuntu-latest
