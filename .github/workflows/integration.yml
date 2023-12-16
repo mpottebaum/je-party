@@ -16,7 +16,7 @@ on:
 jobs:
   check:
     name: astro check
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
