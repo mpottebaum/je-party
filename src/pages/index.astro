@@ -1,3 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Game } from '../components/game';
+---
+<Layout title="J'Party">
+	<main>
+		<Game client:load />
+	</main>
+</Layout>
+<style is:global>
 .game-container {
   text-align: center;
   color: white;
@@ -107,3 +117,5 @@
   color: #d69f4c;
   font-size: 2rem;
 }
+
+</style>

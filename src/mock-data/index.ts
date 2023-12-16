@@ -1,4 +1,4 @@
-import { ApiCategory, Category } from '../types'
+import type { ApiCategory, Category } from '../types'
 
 export const mockApiCategories: ApiCategory[] = [
   {

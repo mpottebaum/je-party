@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Category, Clue } from '../types'
+import type { Category, Clue } from '../types'
 import { Board } from './board'
 import { getCategories, isCorrectAnswer } from '../utils'
 

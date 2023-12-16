@@ -1,4 +1,4 @@
-import { ApiClue, Clue } from '../types'
+import type { ApiClue, Clue } from '../types'
 import { formatAirdate } from './format-airdate'
 
 export function createClue(clue: ApiClue, value?: number): Clue {

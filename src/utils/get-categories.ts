@@ -1,29 +1,12 @@
-import { fetchCategory } from '../api'
-import { Category } from '../types'
+import { createCategory } from '.'
+import { mockApiCategories } from '../mock-data'
 
-export async function getCategories(numCategories: number, maxAttempts = 20) {
-  const newCats: Category[] = []
-  let remaining = numCategories
-  let attempts = 0
-  while (remaining > 0 && attempts < 20) {
-    const promises = Array.from({ length: remaining }).map(() => {
-      return fetchCategory()
-    })
-    const results = await Promise.all(promises)
-    const validCats = results
-      .filter(([, isValid]) => isValid)
-      .map(([cat]) => cat)
-    newCats.push(...validCats)
-    remaining = numCategories - newCats.length
-    attempts++
-    // console.log({
-    //   remaining,
-    //   attempts,
-    //   newCats,
-    // })
-  }
-  if (attempts >= maxAttempts) {
-    console.log(`get categories: too many attempts ${attempts}`)
-  }
-  return newCats
+export async function getCategories(numCategories: number) {
+  return mockApiCategories.slice(0, numCategories).map((apiCategory) => {
+    const [cat, isValid] = createCategory(apiCategory)
+    if (isValid) {
+      return cat
+    }
+    return cat
+  })
 }

@@ -20,7 +20,6 @@ export interface ApiCategory {
   clues_count: number
   clues: ApiClue[]
 }
-
 export interface Category {
   clues: Record<number, Clue>
   title: string

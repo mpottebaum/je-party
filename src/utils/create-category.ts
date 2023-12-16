@@ -1,5 +1,5 @@
 import { createClue } from './create-clue'
-import { ApiCategory, Category, Clue } from '../types'
+import type { ApiCategory, Category, Clue } from '../types'
 
 const singleClueValues = [100, 200, 300, 400, 500]
 
